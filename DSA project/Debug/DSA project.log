@@ -1,0 +1,32 @@
+﻿  heap.cpp
+c:\users\user\desktop\dsa project\dsa project\heap.h(17): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\user\desktop\dsa project\dsa project\heap.cpp(27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\user\desktop\dsa project\dsa project\heap.cpp(33): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\user\desktop\dsa project\dsa project\heap.cpp(36): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+c:\users\user\desktop\dsa project\dsa project\heap.cpp(45): warning C4244: '*=': conversion from 'double' to 'int', possible loss of data
+c:\users\user\desktop\dsa project\dsa project\heap.cpp(59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\user\desktop\dsa project\dsa project\heap.cpp(65): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\user\desktop\dsa project\dsa project\heap.cpp(68): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\user\desktop\dsa project\dsa project\heap.cpp(69): warning C4305: 'argument': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+c:\users\user\desktop\dsa project\dsa project\heap.cpp(119): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+c:\users\user\desktop\dsa project\dsa project\heap.cpp(165): warning C4244: 'initializing': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\user\desktop\dsa project\dsa project\heap.cpp(167): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+c:\users\user\desktop\dsa project\dsa project\heap.cpp(204): warning C4244: 'initializing': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\user\desktop\dsa project\dsa project\heap.cpp(206): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+  DSA project.vcxproj -> C:\Users\User\Desktop\DSA project\Debug\DSA project.exe
