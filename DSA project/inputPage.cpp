@@ -6,11 +6,8 @@ InputFields::InputFields():n(null){}
 
 InputFields::InputFields( int d[] , int &no):n(no) {
 
-	//dataField = &r[0];
-	//dataText = t;
 	dataset = &d[0];
-	//dataText = &t[0];
-	//n = no;
+
 	n = NULL;
 
 
@@ -32,8 +29,6 @@ InputFields::InputFields( int d[] , int &no):n(no) {
 	DataMessage.setPosition(70, 280);
 	DataMessage.setFillColor(sf::Color::Black);
 
-	//dataText = new sf::Text;
-	//dataset = new int;
 
 	numberofData = sf::Text("", font, 40);
 	numberofData.setFillColor(sf::Color::Black);
@@ -41,22 +36,23 @@ InputFields::InputFields( int d[] , int &no):n(no) {
 
 }
 
-//sf::Vector2f InputFields::numberBoxP(465, 95);
-//sf::Vector2f InputFields::numberBoxP.x = 465;
-
-
 void InputFields::InputEvents(sf::RenderWindow &window , sf::Event &event) {
 	if (event.type == sf::Event::TextEntered && isActive == true) {
 		input += event.text.unicode;
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Backspace)) {
+			input = input.substr(0, input.length() - 2);
+
+		}
+
 		numberofData.setString(input);
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
 			numberBox.setFillColor(sf::Color::White);
 			n = std::stoi(input);
+
 			dataField = new sf::RectangleShape[n];
-			//dataset = new int[n];
 			dataText = new sf::Text[n];
-			//dataField[n];
-			//dataText[n];
+
 
 			for (int i = 0; i < n; i++) {
 				dataText[i].setString("");
@@ -74,8 +70,13 @@ void InputFields::InputEvents(sf::RenderWindow &window , sf::Event &event) {
 		
 		data += event.text.unicode;
 		//std::cout << dataField[count].getPosition().x<<"....."<< dataField[i].getPosition().y<<std::endl;
-		dataText[count].setString(data);
 		
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Backspace)) {
+			data = data.substr(0, data.length() - 2);
+			
+		}
+		dataText[count].setString(data);
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
 			dataField[count].setFillColor(sf::Color::White);
 			*(dataset+count) = std::stoi(data);
@@ -103,18 +104,7 @@ void InputFields::InputEvents(sf::RenderWindow &window , sf::Event &event) {
 			if ((event.mouseButton.x >= numberBoxP.x) && (event.mouseButton.x <= numberBoxP.x + numberBoxS.x)) {
 				if ((event.mouseButton.y >= numberBoxP.y) && (event.mouseButton.y <= numberBoxP.y + numberBoxS.y)) {
 					numberBox.setFillColor(sf::Color::Color(204, 255, 255));
-					/*if (window.waitEvent(event)) {
-						if (event.type == sf::Event::TextEntered ) {
-							input += event.text.unicode;
-							numberofData.setString(input);
-						}
-						if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-							numberBox.setFillColor(sf::Color::White);
-							n = std::stoi(input);
-							dataField = new sf::RectangleShape[n];
-							std::cout << "N :" << n;
-						}
-					}*/
+					
 					isActive = true;
 
 				}
@@ -142,9 +132,6 @@ void InputFields::InputEvents(sf::RenderWindow &window , sf::Event &event) {
 			std::cout << "mouse y: " << event.mouseButton.y << std::endl;
 		}
 	}
-
-
-
 
 	sf::Vector2i position = sf::Mouse::getPosition(window);
 	std::cout << "x= " << position.x << "\t y=" << position.y << std::endl;
@@ -206,8 +193,7 @@ bool InputFields::isRunning() {
 	return running;
 }
 
-void InputFields::displaydata() {
-	for (int i = 0; i < n; i++) {
-		std::cout << dataset[i]<<std::endl;
-	}
+InputFields::~InputFields() {
+	//delete dataField;
+	//delete dataText;
 }

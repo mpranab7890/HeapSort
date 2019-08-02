@@ -29,6 +29,7 @@ private:
 public:
 	Heap();
 	Heap(int &n , int[] , sf::RectangleShape[] , sf::Text[] , sf::Sprite& , sf::RenderWindow&);
+	~Heap();
 	static bool isInitialized;
 	static bool isSorted;
 	void create_heap(sf::RenderWindow &);

@@ -101,7 +101,7 @@ void Heap::draw(sf::RenderWindow &window) {
 	create_heap(window);
 
 	for (int i = 0; i < n; i++) {
-		if (!isInitialized) {
+		if (isInitialized == false) {
 			dataTextD[i].setCharacterSize(40);
 			dataTextD[i].setPosition(dataFieldD[i].getPosition() + sf::Vector2f(0, dataFieldD[i].getSize().y / 4));
 		}
@@ -118,7 +118,7 @@ void Heap::move() {
 		//dataTextD[i].move(dataTextD[i].getPosition().x - node[i].getPosition().x + node[i].getGlobalBounds().width / 4, node[i].getPosition().y - node[i].getPosition().y + node[i].getGlobalBounds().height / 4);
 		dataTextD[i].setCharacterSize(node[i].getRadius());
 	}
-	std::cout << dataTextD[0].getPosition().x << "....." << dataTextD[0].getPosition().y;
+//	std::cout << dataTextD[0].getPosition().x << "....." << dataTextD[0].getPosition().y;
 }
 
 void Heap::HeapEvents(sf::RenderWindow &, sf::Event&) {
@@ -222,4 +222,12 @@ void Heap::display() {
 	window.draw(sprite);
 	this->draw(window);
 	window.display();
+}
+
+Heap::~Heap() {
+	delete node;
+	delete dataFieldD;
+	delete dataTextD;
+	delete dataset;
+	std::cout << "Terminating...............................";
 }

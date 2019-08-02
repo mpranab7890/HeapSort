@@ -25,7 +25,6 @@ private:
 
 	sf::Vector2f dataFieldP= sf::Vector2f(5, 350);
 
-
 	sf::Vector2f numberBoxP = sf::Vector2f(465, 95);
 	sf::Vector2f numberBoxS = sf::Vector2f (100, 50);
 	sf::Vector2f dataFieldPcopy;
@@ -35,17 +34,16 @@ private:
 	sf::Texture button_texture;
 	sf::Sprite button_sprite;
 	
-protected:
 	sf::RectangleShape *dataField;
 	sf::Text *dataText;
 
 public:
 	InputFields();
 	InputFields( int[] , int &);
+	~InputFields();
 	void InputEvents(sf::RenderWindow & , sf::Event &);
 	void create_data_fields(sf::RenderWindow & , sf::Vector2f dataFieldP = sf::Vector2f(5, 350));
 	void draw(sf::RenderWindow &);
-	void displaydata();
 	bool isRunning();
 	sf::RectangleShape* dataFieldPointer();
 	sf::Text* TextPointer();
