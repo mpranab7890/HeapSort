@@ -9,7 +9,7 @@
 bool Heap::isInitialized = false;
 bool Heap::isSorted = false;
 
-Heap::Heap(int &no , int d[] , sf::RectangleShape r[], sf::Text t[] , sf::Sprite &sp , sf::RenderWindow& w):n(no) , sprite(sp) , window(w) {
+Heap::Heap(int &no , float d[] , sf::RectangleShape r[], sf::Text t[] , sf::Sprite &sp , sf::RenderWindow& w):n(no) , sprite(sp) , window(w) {
 	node = new sf::CircleShape[n];
 	dataFieldD = &r[0];
 	dataTextD = &t[0];
@@ -30,10 +30,10 @@ void Heap::create_heap(sf::RenderWindow &window) {
 			node[loop].setPosition(nodePosCopy);
 		}
 		else if ((loop+1) % 2 == 0) {
-			node[loop].setPosition(sf::Vector2f(node[int((loop + 1) / 2) - 1].getPosition().x , nodePosCopy.y) - sf::Vector2f(250/(count-1), 0));
+			node[loop].setPosition(sf::Vector2f(node[int((loop + 1) / 2) - 1].getPosition().x , nodePosCopy.y) - sf::Vector2f(240/(count-1), 0));
 		}
 		else {
-			node[loop].setPosition(sf::Vector2f(node[int((loop + 1) / 2)-1].getPosition().x, nodePosCopy.y) + sf::Vector2f(250/(count-1), 0));
+			node[loop].setPosition(sf::Vector2f(node[int((loop + 1) / 2)-1].getPosition().x, nodePosCopy.y) + sf::Vector2f(240/(count-1), 0));
 		}
 		window.draw(node[loop]);
 		loop++;
@@ -86,19 +86,31 @@ void Heap::create_heap(sf::RenderWindow &window) {
 	}
 }
 
-void Heap::draw(sf::RenderWindow &window) {
+void Heap::draw(sf::RenderWindow &window , sf::Sprite &button_sprite) {
 	dataFieldPCopy = dataFieldP;
-	for (int i = 0; i < n; i++) {
-		dataFieldD[i].setPosition(dataFieldPCopy);
-		window.draw(dataFieldD[i]);
-		dataFieldPCopy.x += dataFieldD[i].getSize().x;
-		if ((i + 1) % 10 == 0 && i != 0) {
-			dataFieldPCopy.y += dataFieldD[i].getSize().y + 4;
-			dataFieldPCopy.x -= dataFieldD[i].getSize().x * 10;
+
+	if (isInitialized == false) {
+		for (int i = 0; i < n; i++) {
+			dataFieldD[i].setPosition(dataFieldPCopy);
+			window.draw(dataFieldD[i]);
+			dataFieldPCopy.x += dataFieldD[i].getSize().x;
+			if ((i + 1) % 10 == 0 && i != 0) {
+				dataFieldPCopy.y += dataFieldD[i].getSize().y + 4;
+				dataFieldPCopy.x -= dataFieldD[i].getSize().x * 10;
+			}
 		}
 	}
+	
+	if (isSorted == false) {
+		create_heap(window);
+	}
+	else  {
+		sort_next_P = dataFieldP + sf::Vector2f(window.getSize().x / 2 - button_sprite.getGlobalBounds().width / 2, int((n + 10) / 10) * 100 + 50);
+		button_sprite.setPosition(sort_next_P);
+		window.draw(button_sprite);
+	}
 
-	create_heap(window);
+	
 
 	for (int i = 0; i < n; i++) {
 		if (isInitialized == false) {
@@ -108,25 +120,38 @@ void Heap::draw(sf::RenderWindow &window) {
 		
 		window.draw(dataTextD[i]);
 	}
+
 	isInitialized = true;
 	
 }
 
 void Heap::move() {
 	for (int i = 0; i < n; i++) {
-		dataTextD[i].setPosition(node[i].getPosition().x + node[i].getGlobalBounds().width/4 , node[i].getPosition().y + node[i].getGlobalBounds().height/4);
+		dataTextD[i].setPosition(node[i].getPosition().x + node[i].getGlobalBounds().width/8 , node[i].getPosition().y + node[i].getGlobalBounds().height/4);
 		//dataTextD[i].move(dataTextD[i].getPosition().x - node[i].getPosition().x + node[i].getGlobalBounds().width / 4, node[i].getPosition().y - node[i].getPosition().y + node[i].getGlobalBounds().height / 4);
 		dataTextD[i].setCharacterSize(node[i].getRadius());
 	}
 //	std::cout << dataTextD[0].getPosition().x << "....." << dataTextD[0].getPosition().y;
 }
 
-void Heap::HeapEvents(sf::RenderWindow &, sf::Event&) {
+bool Heap::HeapEvents(sf::RenderWindow &window, sf::Event& event , sf::Sprite &button_sprite ) {
+	if (event.type == sf::Event::MouseButtonPressed) {
+		if ((event.mouseButton.x >= button_sprite.getPosition().x) && (event.mouseButton.x <= button_sprite.getPosition().x + button_sprite.getGlobalBounds().width)) {
+			if ((event.mouseButton.y >= button_sprite.getPosition().y) && (event.mouseButton.y <= button_sprite.getPosition().y + button_sprite.getGlobalBounds().height)) {
+				std::cout << "Pressed";
+				InputFields::isRunning = true;
+				return true;
+				//delete i;
+				//n = NULL;
+			}
+		}
+		return false;
+	}
 
 }
 
 
-void Heap::maxHeapify(int arr[], int n, int i) {
+void Heap::maxHeapify(float arr[], int n, int i) {
 	left = 2 * i + 1;
 	right = 2 * i + 2;
 	largest = i;
@@ -176,13 +201,13 @@ void Heap::maxHeapify(int arr[], int n, int i) {
 
 }
 
-void Heap::buildMaxHeap(int arr[], int n) {
+void Heap::buildMaxHeap(float arr[], int n) {
 	for (int i = n / 2 - 1; i >= 0; i--) {
 		maxHeapify(arr, n, i);
 	}
 }
 
-void Heap::HeapSort(int arr[], int n) {
+void Heap::HeapSort(float arr[], int n) {
 	buildMaxHeap(arr, n);
 	for (int i = n - 1; i >= 0; i--) {
 		std::swap(arr[0], arr[i]);
@@ -218,16 +243,18 @@ void Heap::HeapSort(int arr[], int n) {
 }
 
 void Heap::display() {
+	sf::Texture t;
+	sf::Sprite s(t);
 	window.clear();
 	window.draw(sprite);
-	this->draw(window);
+	this->draw(window , s);
 	window.display();
 }
 
 Heap::~Heap() {
-	delete node;
-	delete dataFieldD;
-	delete dataTextD;
-	delete dataset;
-	std::cout << "Terminating...............................";
+	delete []node;
+	//delete []dataFieldD;
+	//delete []dataTextD;
+	//delete []dataset;
+	std::cout << "Terminating............................";
 }

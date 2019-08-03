@@ -13,32 +13,30 @@ private:
 	sf::RenderWindow &window;
 	sf::RectangleShape* dataFieldD ;
 	sf::Text* dataTextD ;
-	int *dataset;
-	sf::Vector2f dataFieldP = sf::Vector2f(5, (1080 - ((n + 10) / 10) * 100 - 80));
+	float *dataset;
+	sf::Vector2f dataFieldP = sf::Vector2f(5, (1080 - ((n + 10) / 10) * 100 - 400));
 	sf::Vector2f dataFieldPCopy;
+	sf::Vector2f sort_next_P;
 	int left;
 	int right;
 	int largest;
 	sf::Vector2f v1;
 	sf::Vector2f v2;
 	float c,x , y, length, angle;
-	sf::Clock timer;
-	
-	
 
 public:
 	Heap();
-	Heap(int &n , int[] , sf::RectangleShape[] , sf::Text[] , sf::Sprite& , sf::RenderWindow&);
+	Heap(int &n , float[] , sf::RectangleShape[] , sf::Text[] , sf::Sprite& , sf::RenderWindow&);
 	~Heap();
 	static bool isInitialized;
 	static bool isSorted;
 	void create_heap(sf::RenderWindow &);
-	void draw(sf::RenderWindow &);
+	void draw(sf::RenderWindow & , sf::Sprite &button_sprite);
 	void move();
-	void maxHeapify(int[] , int , int );
-	void buildMaxHeap(int [], int );
-	void HeapSort(int[], int);
+	void maxHeapify(float[] , int , int );
+	void buildMaxHeap(float [], int );
+	void HeapSort(float[], int);
 	void display();
-	void HeapEvents(sf::RenderWindow &, sf::Event&);
+	static bool HeapEvents(sf::RenderWindow &, sf::Event& , sf::Sprite & );
 
 };

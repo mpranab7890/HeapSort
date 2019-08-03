@@ -2,9 +2,11 @@
 #include <iostream>
 #include "inputPage.hpp"
 
+bool InputFields::isRunning = true;
+
 InputFields::InputFields():n(null){}
 
-InputFields::InputFields( int d[] , int &no):n(no) {
+InputFields::InputFields( float d[] , int &no):n(no) {
 
 	dataset = &d[0];
 
@@ -79,7 +81,7 @@ void InputFields::InputEvents(sf::RenderWindow &window , sf::Event &event) {
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
 			dataField[count].setFillColor(sf::Color::White);
-			*(dataset+count) = std::stoi(data);
+			*(dataset+count) = std::stof(data);
 			data = "";
 			count++;
 			if (count >= n) {
@@ -122,7 +124,8 @@ void InputFields::InputEvents(sf::RenderWindow &window , sf::Event &event) {
 				if ((event.mouseButton.x >= button_sprite.getPosition().x) && (event.mouseButton.x <= button_sprite.getPosition().x + button_sprite.getGlobalBounds().width)) {
 					if ((event.mouseButton.y >= button_sprite.getPosition().y) && (event.mouseButton.y <= button_sprite.getPosition().y + button_sprite.getGlobalBounds().height)) {
 						std::cout << "Pressed";
-						running = false;
+						isRunning = false;
+						displayButton = false;
 					}
 				}
 			}
@@ -160,6 +163,7 @@ void InputFields::create_data_fields(sf::RenderWindow &window , sf::Vector2f dat
 
 	for (int i = 0; i < n; i++) {
 		dataText[i].setPosition(dataField[i].getPosition() + sf::Vector2f(0, dataFieldS.y / 4));
+
 		window.draw(dataText[i]);
 
 	}
@@ -189,11 +193,7 @@ sf::Text* InputFields::TextPointer() {
 	return dataText;
 }
 
-bool InputFields::isRunning() {
-	return running;
-}
-
 InputFields::~InputFields() {
-	//delete dataField;
-	//delete dataText;
+	delete [] dataField;
+	delete [] dataText;
 }

@@ -13,47 +13,70 @@ int main()
 	texture.loadFromFile("../Resources/bg.jpg");
 	sf::Sprite sprite(texture);
 
+	sf::Texture button_texture;
+	button_texture.loadFromFile("../Resources/next.png");
 
+	sf::Sprite button_sprite;
+	button_sprite.setTexture(button_texture);
 
-	int *datasetMain = new int;
+	button_sprite.setPosition(500, 540);
+
+	float *datasetMain = new float;
 	int n;
 
-	InputFields inputPage( datasetMain , n);
-	Heap *h1;
+	InputFields *inputPage = NULL;
+	Heap *h1 = NULL;
 	Heap::isInitialized = false;
 
 	while (window.isOpen())
 	{
+		if(inputPage == NULL)
+			inputPage = new InputFields(datasetMain, n);
+
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
 
-			if(inputPage.isRunning())
-				inputPage.InputEvents(window, event);
+			if(InputFields::isRunning)
+				inputPage->InputEvents(window, event);
 			
-			
+			if (Heap::isSorted) {
+				if ((Heap::HeapEvents(window, event, button_sprite)) == true) {
+					//delete[] inputPage;
+					//delete[] h1;
+					inputPage = NULL;
+					Heap::isSorted = false;
+				}
+			}
 		}
 		//std::cout << n;
+		if (inputPage == NULL)
+			inputPage = new InputFields(datasetMain, n);
 
 		window.clear();
 		window.draw(sprite);
-		if (inputPage.isRunning()) {
-			inputPage.draw(window);
+		if (InputFields::isRunning) {
+			
+			inputPage->draw(window);
 
 		}
 		else {
 			
-			h1 = new Heap (n, datasetMain, inputPage.dataFieldPointer(), inputPage.TextPointer(), sprite, window);
+			h1 = new Heap (n, datasetMain, inputPage->dataFieldPointer(), inputPage->TextPointer(), sprite, window);
 
-			h1->draw(window);
+			h1->draw(window , button_sprite);
 			h1->move();
+			window.display();
+			Sleep(1500);
 
-			if (!Heap::isSorted)
+			if (Heap::isSorted==false)
 				h1->HeapSort(datasetMain, n);
-			else
+
+			else {
 				Heap::isInitialized = false;
+			}
 
 		}
 
@@ -63,5 +86,6 @@ int main()
 	}
 	//delete datasetMain;
 
-	return 0;
+
+	//return 0;
 }

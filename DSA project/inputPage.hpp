@@ -17,7 +17,7 @@ private:
 	//sf::String input;
 	sf::Font font;
 	
-	int *dataset;
+	float *dataset;
 	sf::RectangleShape numberBox;
 	sf::Text numberofData;
 	sf::Text EnterMessage;
@@ -38,13 +38,14 @@ private:
 	sf::Text *dataText;
 
 public:
+	static bool isRunning;
 	InputFields();
-	InputFields( int[] , int &);
+	InputFields( float[] , int &);
 	~InputFields();
 	void InputEvents(sf::RenderWindow & , sf::Event &);
 	void create_data_fields(sf::RenderWindow & , sf::Vector2f dataFieldP = sf::Vector2f(5, 350));
 	void draw(sf::RenderWindow &);
-	bool isRunning();
+	//bool isRunning();
 	sf::RectangleShape* dataFieldPointer();
 	sf::Text* TextPointer();
 
